@@ -3,6 +3,8 @@ import InputField from '../../components/InputField';
 import { useHistory } from 'react-router-dom';
 import { FiCheck, FiArrowLeft } from 'react-icons/fi';
 
+import api from '../../services/api';
+
 import { Container, GoBack, Heading, Form, Submit, Subscribe } from './styles';
 
 const Login: React.FC = () => {
@@ -18,12 +20,16 @@ const Login: React.FC = () => {
     const handleSubmit = (ev: FormEvent) => {
         ev.preventDefault();
 
-        console.log({
+        api.post('login', {
             email,
             password
-        });
-
-        history.push('study');
+        }).then(({ data }) => {
+            if (data.isPasswordCorrect) {
+                history.push('study');
+            } else {
+                alert('SENHA INCORRETA OU USUÁRIO NÃO ENCONTRADO')
+            }
+        })
     };
 
     return (
@@ -38,7 +44,7 @@ const Login: React.FC = () => {
                 <Submit>
                     <FiCheck size={32} color="#fadcac" />
                 </Submit>
-                <Subscribe to="subscribe">Cadastre-se aqui</Subscribe>
+                <Subscribe to="register">Cadastre-se aqui</Subscribe>
             </Form>
         </Container>
     );

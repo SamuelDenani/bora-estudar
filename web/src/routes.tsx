@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Subscribe from './pages/Subscribe';
+import Subscribe from './pages/Register';
 import Study from './pages/Study';
 
 function Routes () {
@@ -12,7 +12,7 @@ function Routes () {
             <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/login" component={Login} />
-                <Route path="/subscribe" component={Subscribe} />
+                <Route path="/register" component={Subscribe} />
                 <Route path="/study" component={Study} />
             </Switch>
         </BrowserRouter>

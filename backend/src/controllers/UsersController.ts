@@ -1,11 +1,16 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
+import bcrypt from 'bcrypt';
 
 import User from '../models/User';
 
 export default {
     async index(req: Request, res: Response) {
-        return res.json({ message: 'OK' })
+        const usersRepository = getRepository(User);
+
+        const users = usersRepository.find();
+
+        return res.json(users)
     },
 
     async create(req: Request, res: Response) {
@@ -16,11 +21,15 @@ export default {
             password
         } = req.body;
 
+        const saltRounds = 10;
+
+        const passwordHash = await bcrypt.hash(password, saltRounds);
+
         const data = {
             name,
             last_name,
             email,
-            password
+            password: passwordHash
         };
 
         const usersRepository = getRepository(User);
